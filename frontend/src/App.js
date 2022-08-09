@@ -7,31 +7,42 @@ import jwt_deocde from "jwt-decode";
 function App() {
   const [user, setuser] = useState('xd');
 
+  const submited = async (e) =>{
+    e.preventDefault();
+    async function postData(url = '', data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+         body: JSON.stringify(data) // body data type must match "Content-Type" header
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    }
+    postData('https://arye321-medcheck-g4gvvxr4c9rxj-8000.githubpreview.dev/test', { name: "asdf" })
+    .then((data) => {
+      console.log(data); // JSON data parsed by `data.json()` call
+      // setuser(data.stringify())
+    });
+    
+  }
   return (
     <div className="App">
       <header className="App-header">
-      <h3>whats in here 😎....</h3>
-      <h1>{user}</h1>
-      <GoogleOAuthProvider clientId="850364421534-9f2re6djtki6sm8dh02ml8j0dg11fvih.apps.googleusercontent.com">
-     
-        <GoogleLogin
-          text="signin_with"
-          theme="filled_blue"
-          size="large"
-          ux_mode="popup"
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-            let userCred = credentialResponse.credential;
-            let payload = jwt_deocde(userCred);
-            console.log(payload);
-            
-          }}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
-      </GoogleOAuthProvider>
+        <div className='formdiv'>
+          <form onSubmit={submited}>
+            <label for="fname">First name:</label><br/>
+              <input type="text" id="fname" name="fname" value="John"/><br/>
+                <input type="submit" value="Submit"/>
+          </form>
+        </div>
+        
+        <h3>whats in here 😎....</h3>
+        <h1>{user}</h1>
       </header>
+
     </div>
   );
 }

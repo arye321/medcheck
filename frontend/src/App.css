@@ -13,5 +13,12 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.formdiv {
+  font-size: 40px;
+}
+input{
+
+  font-size: 23px;
+}
 
 
